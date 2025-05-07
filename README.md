@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>健康证查询系统</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-left: 5px solid #4CAF50;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>健康证查询系统</h1>
+  <div class="container">
+    <label for="certId">请输入健康证编号：</label>
+    <input type="text" id="certId" placeholder="例如：A123456789">
+    <button onclick="searchCert()">查询</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const certData = {
+      "A21054672": {
+        name: "杨林波",
+        org: "南昌市第一医院",
+        examDate: "2025-05-06",
+        expiryDate: "2026-05-06",
+        status: "合格"
+      },
+      "HC2025345678": {
+        name: "李四",
+        org: "市第一人民医院",
+        examDate: "2025-04-10",
+        expiryDate: "2026-04-09",
+        status: "合格"
+      }
+    };
+
+    function searchCert() {
+      const certId = document.getElementById('certId').value.trim();
+      const resultBox = document.getElementById('result');
+
+      if (!certId) {
+        resultBox.innerHTML = '请输入有效的健康证编号';
+        resultBox.style.display = 'block';
+        return;
+      }
+
+      const data = certData[certId];
+
+      if (data) {
+        resultBox.innerHTML = `
+          <strong>姓名：</strong> ${data.name}<br>
+          <strong>体检机构：</strong> ${data.org}<br>
+          <strong>健康证编号：</strong> ${certId}<br>
+          <strong>体检日期：</strong> ${data.examDate}<br>
+          <strong>有效期至：</strong> ${data.expiryDate}<br>
+          <strong>健康状况：</strong> ${data.status}
+        `;
+      } else {
+        resultBox.innerHTML = '未查询到该编号的健康证信息';
+      }
+
+      resultBox.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
